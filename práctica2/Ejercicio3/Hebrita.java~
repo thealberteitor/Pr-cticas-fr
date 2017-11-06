@@ -1,0 +1,21 @@
+import java.util.Random;
+/**
+ *
+ * @author Alberto
+ */
+public class Hebrita extends Thread {
+
+    
+    private ProcesadorYodafy procesadorYoda;
+
+
+    // En el constructor podemos pasarle alguna variable que hayamos creado en otra clase.
+    Hebrita(ProcesadorYodafy procesador) {
+        this.procesadorYoda = procesador;
+    }
+
+    // El contenido de este método se ejecutará tras llamar al método "start()". Se trata del procesamiento de la hebra.
+    public void run() {
+    	this.procesadorYoda.procesa(); 
+    }
+}

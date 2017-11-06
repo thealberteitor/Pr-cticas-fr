@@ -36,6 +36,11 @@ public class YodafyClienteTCP {
 			BufferedReader inReader = new BufferedReader(new InputStreamReader(socketServicio.getInputStream()));
 
 
+			// Creamos un socket que se conecte a "host" y "port":
+			//////////////////////////////////////////////////////
+			// socketServicio= ... (Completar)
+			//////////////////////////////////////////////////////
+
 			InputStream inputStream = socketServicio.getInputStream();
 			OutputStream outputStream = socketServicio.getOutputStream();
 

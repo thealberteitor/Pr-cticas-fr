@@ -34,22 +34,31 @@ public class ProcesadorYodafy {
 	// Aquí es donde se realiza el procesamiento realmente:
 	void procesa(){
 
-		String recibidos;
+		// Como máximo leeremos un bloque de 1024 bytes. Esto se puede modificar.
+		byte [] buffer=new byte[1024];
+		int port;
+
 
 		try {
-			// Obtiene los flujos de escritura/lectura
-			inputStream=socketServicio.getInputStream();
-			outputStream=socketServicio.getOutputStream();
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-			recibidos = reader.readLine();
-			
-			String responder = yodaDo(recibidos);
-			
-			PrintWriter writer = new PrintWriter(outputStream, true);
-			
-			writer.println(respuesta);
-	
+			DatagramPacket paquete = new DatagramPacket(buffer, buffer.length);
+
+			socketServicio.receive(paquete);
+			InetAdress direccion = paquete.getAddress();
+			port = paquete.getPort();
+			buffer = paquete.getData();
+
+			String peticion=new String(buffer,0,buffer.length);
+
+			String respuesta=yodaDo(peticion);
+
+			buffer=respuesta.getBytes();
+
+			paquete = new DatagramPacket(buffer, buffer.length, direccion, port);
+
+			socketServicio.send(paquete);
+
+
 
 		} catch (IOException e) {
 			System.err.println("Error al obtener los flujso de entrada/salida.");
